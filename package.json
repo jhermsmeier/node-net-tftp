@@ -1,0 +1,29 @@
+{
+  "name": "net-tftp",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "Trivial File Transfer Protocol",
+  "author": "Jonas Hermsmeier <jhermsmeier@gmail.com> (https://jhermsmeier.de)",
+  "keywords": [
+    "tftp",
+    "ftp",
+    "protocol",
+    "client",
+    "server"
+  ],
+  "main": "lib/tftp.js",
+  "homepage": "https://github.com/jhermsmeier/node-net-tftp#readme",
+  "bugs": {
+    "url": "https://github.com/jhermsmeier/node-net-tftp/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhermsmeier/node-net-tftp.git"
+  },
+  "scripts": {
+    "test": "control test"
+  },
+  "devDependencies": {
+    "@jhermsmeier/control": "^1.3.0"
+  }
+}
