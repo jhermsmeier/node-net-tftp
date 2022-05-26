@@ -1,7 +1,6 @@
 # Trivial File Transfer Protocol (TFTP)
 
 
-
 ## Installation
 
 ```shell
@@ -9,14 +8,56 @@ npm install --save net-tftp
 ```
 
 
-
 ## Usage
 
-```shell
-net-tftp [command] [options]
+```js
+var TFTP = require( 'net-tftp' )
 ```
 
+```js
+var server = new TFTP.Server({
+  ttl: undefined, // If set, will be used to `socket.setTTL()`
+  reuseAddr: false, // Set address reuse for the listening socket
+})
+```
 
+```js
+server.on( 'read-request', ( transfer ) => {
+
+  // Rejecting a request can be done via `transfer.error()`
+  if( transfer.request.filename == 'nope' ) {
+    return transfer.error( TFTP.ERROR.NOT_FOUND )
+  }
+
+  try {
+    var readable = fs.createReadStream( filepath )
+    var writable = transfer.accept()
+    stream.pipeline( readable, writable, ( error ) => {
+      if( error ) transfer.error( TFTP.ERROR.UNDEFINED, 'Internal Server Error' )
+    })
+  } catch( error ) {
+    if( error.code == 'ENOENT' ) {
+      transfer.error( TFTP.ERROR.NOT_FOUND )
+    } else {
+      transfer.error( TFTP.ERROR.UNDEFINED, 'Internal Server Error' )
+    }
+  }
+
+})
+```
+
+```js
+server.on( 'write-request', ( transfer ) => {
+  // Accepting a write request returns a readable stream
+  var readable = transfer.accept()
+  var destination = fs.createWriteStream( transfer.request.filename )
+
+  stream.pipeline( readable, destination, ( error ) => {
+    if( error ) transfer.error( TFTP.ERROR.UNDEFINED, 'Internal Server Error' )
+  })
+
+})
+```
 
 ## References
 
