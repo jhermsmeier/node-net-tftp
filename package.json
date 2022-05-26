@@ -1,6 +1,6 @@
 {
   "name": "net-tftp",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "description": "Trivial File Transfer Protocol",
   "author": "Jonas Hermsmeier <jhermsmeier@gmail.com> (https://jhermsmeier.de)",
